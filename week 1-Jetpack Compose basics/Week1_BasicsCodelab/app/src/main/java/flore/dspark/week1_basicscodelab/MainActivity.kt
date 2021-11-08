@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -182,5 +184,23 @@ fun OnBoardingScreen(onContinueClicked:() -> Unit){
 fun OnBoardingPreview(){
     Week1_BasicsCodelabTheme {
         OnBoardingScreen(onContinueClicked = {}) // 클릭하면 아무것도 작동 안함.
+    }
+}
+
+@Composable
+private fun GreetingLazyColumn(names: List<String> = List(1000) {"$it"}){
+    // 리사이클러 뷰와 비슷한 역할의 리스트 형식의 뷰를 만듬.
+    LazyColumn(modifier = Modifier.padding(vertical = 4.dp)){
+        items(items = names){
+            name -> GreetingButton(name = name)
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun LazyColumnPreview(){
+    Week1_BasicsCodelabTheme {
+        GreetingLazyColumn()
     }
 }
