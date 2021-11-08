@@ -12,6 +12,8 @@ import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -85,17 +87,33 @@ private fun MyAppButton(names : List<String> = listOf("World", "Compose")){
 private fun GreetingButton(name : String){
     // Surface -> Raw -> Column - OutlinedButton 순의 부모, 자식 레이아웃 구성
     // OutlinedButton 을 활용한 버튼 추가
+
+    // State 가 변경될 때 Remember 컴포저블로 객체 저장
+    // 수정이 필요한 객체인 경우 mutableStateOf()로 접근하고 해당 value 값에 따라 초기값 구성
+    // 객체의 값 변경이 필요한경우 객체이름.value 로 설정
+    val expanded = remember {
+        mutableStateOf(false)
+    }
+
+    // ture = 48.dp, false = 0.dp
+    // 버튼을 누를 경우 아래로 확장
+    val extraPadding = if (expanded.value) 48.dp else 0.dp
+
     Surface(
         color = MaterialTheme.colors.primary,
         modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp)
     ) {
         Row(modifier = Modifier.padding(24.dp)) {
-            Column(modifier = Modifier.weight(1f)) {
+            Column(modifier = Modifier
+                .weight(1f)
+                .padding(bottom = extraPadding)) {
                 Text(text = "Hello, ")
                 Text(text = name)
             }
-            OutlinedButton(onClick = { /*TODO*/ }) {
-                Text(text = "Show more")
+            OutlinedButton(onClick = { expanded.value = !expanded.value }) {
+                Text(
+                    if (expanded.value) "Show less" else "Show more"
+                )
             }
         }
     }
