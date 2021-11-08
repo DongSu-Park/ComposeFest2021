@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Week1_BasicsCodelab</string>
+
+    <!-- compose UI에 사용하는 텍스트 string 값 추가   -->
+    <string name="show_less">Show less</string>
+    <string name="show_more">Show more</string>
 </resources>
