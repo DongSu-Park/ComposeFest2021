@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -150,7 +151,9 @@ fun DefaultPreviewButton(){
 @Composable
 fun MyAppOnBoarding(){
     // remember, mutableStateOf 를 활용한 상태 저장. 초기값은 ture
-    var shouldShowOnBoarding by remember { mutableStateOf(true)}
+    // 추가 : rememberSaveable을 사용헤 액티비티 라이플사이클에 영향을 받아도 객체 값은 유지
+    // ex. 다크모드 변경, 기기회전 등.
+    var shouldShowOnBoarding by rememberSaveable { mutableStateOf(true)}
 
     // 처음 값이 true 로 인한 OnBoardingScreen 화면 상태
     // 클릭하면 상태를 false 로 변경하고 MyAppButton() 화면으로 변경
