@@ -1,5 +1,6 @@
 package flore.dspark.week1_basicscodelab
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -14,6 +15,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import flore.dspark.week1_basicscodelab.ui.theme.Week1_BasicsCodelabTheme
@@ -112,6 +114,7 @@ private fun GreetingButton(name : String){
         )
     )
 
+    // 추가 : Text 필드에 style 지정 할 수 있으며, 문자의 볼드 처리시 copy 메소드 사용.
     Surface(
         color = MaterialTheme.colors.primary,
         modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp)
@@ -121,7 +124,9 @@ private fun GreetingButton(name : String){
                 .weight(1f)
                 .padding(bottom = extraPadding.coerceAtLeast(0.dp))) {
                 Text(text = "Hello, ")
-                Text(text = name)
+                Text(text = name, style = MaterialTheme.typography.h4.copy(
+                    fontWeight = FontWeight.ExtraBold
+                ))
             }
             OutlinedButton(onClick = { expanded.value = !expanded.value }) {
                 Text(
@@ -213,6 +218,22 @@ private fun GreetingLazyColumn(names: List<String> = List(1000) {"$it"}){
 @Preview(showBackground = true)
 @Composable
 fun LazyColumnPreview(){
+    Week1_BasicsCodelabTheme {
+        GreetingLazyColumn()
+    }
+}
+
+
+// 프리뷰시 다크모드와 일반모드의 UI 상태를 같이 보기 위해 설정
+@Preview(
+    showBackground = true,
+    widthDp = 320,
+    uiMode = UI_MODE_NIGHT_YES,
+    name = "DefaultPreviewDark"
+)
+@Preview(showBackground = true, widthDp = 320)
+@Composable
+fun DefaultPreviewNormal(){
     Week1_BasicsCodelabTheme {
         GreetingLazyColumn()
     }
