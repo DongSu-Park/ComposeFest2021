@@ -3,29 +3,29 @@ package flore.dspark.week1_basicscodelab
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedButton
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import flore.dspark.week1_basicscodelab.ui.theme.Week1_BasicsCodelabTheme
 
+/**
+ * Week1 - Jetpack Compose basics
+ *  메소드 네이밍 가이드라인
+ *      - Compose 함수 이름 생성시 첫글자는 대문자로 진행
+ * */
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            // 앱 테마의 이름은 프로젝트 네이밍에 따라 다르게 표시 될 수 있음.
             Week1_BasicsCodelabTheme {
-                // 앱 테마의 이름은 프로젝트 네이밍에 따라 다르게 표시 될 수 있음.
-                MyApp()
+//                MyApp()
+                MyAppOnBoarding()
             }
         }
     }
@@ -119,8 +119,6 @@ private fun GreetingButton(name : String){
     }
 }
 
-
-
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
@@ -144,5 +142,45 @@ fun DefaultPreviewRaw(){
 fun DefaultPreviewButton(){
     Week1_BasicsCodelabTheme {
         MyAppButton()
+    }
+}
+
+@Composable
+fun MyAppOnBoarding(){
+    // remember, mutableStateOf 를 활용한 상태 저장. 초기값은 ture
+    var shouldShowOnBoarding by remember { mutableStateOf(true)}
+
+    // 처음 값이 true 로 인한 OnBoardingScreen 화면 상태
+    // 클릭하면 상태를 false 로 변경하고 MyAppButton() 화면으로 변경
+    if (shouldShowOnBoarding){
+        OnBoardingScreen(onContinueClicked = {shouldShowOnBoarding = false})
+    } else {
+        MyAppButton()
+    }
+}
+
+@Composable
+fun OnBoardingScreen(onContinueClicked:() -> Unit){
+    Surface() {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text("Welcome to the Basics Codelab!")
+            Button(
+                modifier = Modifier.padding(24.dp),
+                onClick = onContinueClicked) {
+                    Text(text = "Continue")
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, widthDp = 320, heightDp = 320)
+@Composable
+fun OnBoardingPreview(){
+    Week1_BasicsCodelabTheme {
+        OnBoardingScreen(onContinueClicked = {}) // 클릭하면 아무것도 작동 안함.
     }
 }
