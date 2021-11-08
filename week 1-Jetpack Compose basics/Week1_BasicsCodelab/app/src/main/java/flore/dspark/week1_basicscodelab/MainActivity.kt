@@ -3,6 +3,9 @@ package flore.dspark.week1_basicscodelab
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -100,7 +103,14 @@ private fun GreetingButton(name : String){
 
     // ture = 48.dp, false = 0.dp
     // 버튼을 누를 경우 아래로 확장
-    val extraPadding = if (expanded.value) 48.dp else 0.dp
+    // 추가 : animateDpAsState 로 패딩 확장 시 에니메이션 효과 추가 (스프링 효과)
+    val extraPadding by animateDpAsState(
+        if (expanded.value) 48.dp else 0.dp,
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = Spring.StiffnessLow
+        )
+    )
 
     Surface(
         color = MaterialTheme.colors.primary,
@@ -109,7 +119,7 @@ private fun GreetingButton(name : String){
         Row(modifier = Modifier.padding(24.dp)) {
             Column(modifier = Modifier
                 .weight(1f)
-                .padding(bottom = extraPadding)) {
+                .padding(bottom = extraPadding.coerceAtLeast(0.dp))) {
                 Text(text = "Hello, ")
                 Text(text = name)
             }
@@ -160,7 +170,7 @@ fun MyAppOnBoarding(){
     if (shouldShowOnBoarding){
         OnBoardingScreen(onContinueClicked = {shouldShowOnBoarding = false})
     } else {
-        MyAppButton()
+        GreetingLazyColumn()
     }
 }
 
