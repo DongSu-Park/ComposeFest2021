@@ -88,7 +88,7 @@ private fun GreetingButton(name : String){
     // Surface -> Raw -> Column - OutlinedButton 순의 부모, 자식 레이아웃 구성
     // OutlinedButton 을 활용한 버튼 추가
 
-    // State 가 변경될 때 Remember 컴포저블로 객체 저장
+    // State 변경이 필요한 경우 Remember 컴포저블로 객체 저장
     // 수정이 필요한 객체인 경우 mutableStateOf()로 접근하고 해당 value 값에 따라 초기값 구성
     // 객체의 값 변경이 필요한경우 객체이름.value 로 설정
     val expanded = remember {
