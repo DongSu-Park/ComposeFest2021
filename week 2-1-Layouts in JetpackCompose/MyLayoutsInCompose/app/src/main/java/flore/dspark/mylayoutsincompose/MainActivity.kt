@@ -40,19 +40,19 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun PhotographerCard(modifier: Modifier = Modifier) {
     Row(modifier
-        .padding(16.dp)
-        .clip(RoundedCornerShape(4.dp))
+        .padding(8.dp)
+        .clip(RoundedCornerShape(4.dp)) // 라운드 처리
         .background(MaterialTheme.colors.surface)
-        .clickable(onClick = { /** onClick function */ })
+        .clickable(onClick = { /** onClick function */ }) // 클릭 시 이벤트 처리
         .padding(16.dp)) {
-        Surface(modifier = Modifier.size(50.dp),
+        Surface(modifier = Modifier.size(50.dp), // 원형 Surface
             shape = CircleShape,
             color = MaterialTheme.colors.onSurface.copy(alpha = 0.2f))
         {
             // todo Image goes here
         }
         Column (
-            modifier = Modifier
+            modifier = Modifier // 글자 부분은 8dp 페딩에 가운데 정렬처리
                 .padding(start = 8.dp)
                 .align(Alignment.CenterVertically)
         ) {
